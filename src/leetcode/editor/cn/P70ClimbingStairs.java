@@ -26,8 +26,9 @@
 
 
 package leetcode.editor.cn;
+
 //Java：爬楼梯
-public class P70ClimbingStairs{
+public class P70ClimbingStairs {
     public static void main(String[] args) {
         Solution solution = new P70ClimbingStairs().new Solution();
         // TO TEST
@@ -35,24 +36,26 @@ public class P70ClimbingStairs{
         System.out.println(solution.climbStairs(2));
         System.out.println(solution.climbStairs(3));
         System.out.println(solution.climbStairs(4));
+        System.out.println(solution.climbStairs(5));
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int climbStairs(int n) {
-        if (n <= 2){
-            return n;
+    class Solution {
+        public int climbStairs(int n) {
+            if (n <= 2) {
+                return n;
+            }
+            int f1 = 1;
+            int f2 = 2;
+            int result = 0;
+            for (int i = 3; i <= n; i++) {
+                result = f1 + f2;
+                f1 = f2;
+                f2 = result;
+            }
+            return result;
         }
-        int f1 = 1;
-        int f2 = 2;
-        int result = f1 + f2;
-        for (int i = 3; i <=n ; i++) {
-            result = f1 + f2;
-            f1 = f2;
-            f2 = result;
-        }
-        return result;
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
