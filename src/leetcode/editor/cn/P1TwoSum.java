@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //Java：两数之和
-public class P1TwoSum{
+public class P1TwoSum {
     public static void main(String[] args) {
         Solution solution = new P1TwoSum().new Solution();
         // TO TEST
@@ -31,19 +31,20 @@ public class P1TwoSum{
         System.out.println(Arrays.toString(result));
 
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        Map<Integer,Integer> map = new HashMap<>();
-        for (int i = 0; i <nums.length ; i++) {
-            if (map.containsKey(target - nums[i])){
-                return new int[]{i,map.get(target - nums[i])};
+    class Solution {
+        public int[] twoSum(int[] nums, int target) {
+            Map<Integer, Integer> map = new HashMap<>();
+            for (int i = 0; i < nums.length; i++) {
+                if (map.get(target - nums[i]) != null){
+                    return new int[]{i,map.get(target - nums[i])};
+                }
+                map.put(nums[i],i);
             }
-            map.put(nums[i],i);
+            return new int[]{};
         }
-        return new int[0];
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*

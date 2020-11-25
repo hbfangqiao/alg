@@ -28,8 +28,8 @@ public class P15ThreeSum {
     public static void main(String[] args) {
         Solution solution = new P15ThreeSum().new Solution();
         // TO TEST
-//        int[] input = new int[]{-1, 0, 1, 2, -1, -4};
-        int[] input = new int[]{0,0,0,0};
+        int[] input = new int[]{-1, 0, 1, 2, -1, -4};
+//        int[] input = new int[]{0,0,0,0};
         List<List<Integer>> lists = solution.threeSum(input);
         lists.forEach(e -> {
             System.out.println(e);
@@ -40,34 +40,33 @@ public class P15ThreeSum {
     class Solution {
         public List<List<Integer>> threeSum(int[] nums) {
             List<List<Integer>> result = new ArrayList<>();
-            //排序
             Arrays.sort(nums);
-            //固定i
-            for (int i = 0; i < nums.length - 2; i++) {
-                if (nums[i] > 0) {//大于0跳过
+            for (int i = 0; i <nums.length - 2 ; i++) {
+                int left = nums[i];
+                if (left > 0 || (i > 0 && left == nums[i-1])){//去除重复的left
                     continue;
                 }
-                if (i > 0 && nums[i] == nums[i - 1]) {//跳过重复的 i
-                    continue;
-                }
-                for (int j = i + 1, k = nums.length - 1; k > j; ) {
-                    if (j >= i + 2 && nums[j] == nums[j - 1]) {//跳过重复的j
+                for (int j = i+1,k = nums.length - 1; j < k;) {
+                    int lnum = nums[j];
+                    int rnum = nums[k];
+                    if ((j > i+1 && lnum == nums[j-1])){
                         j++;
                         continue;
                     }
-                    if (k <= nums.length - 2 && nums[k] == nums[k + 1]) {//跳过重复的k
+                    if (k < nums.length - 1 && rnum == nums[k+1]){
                         k--;
                         continue;
                     }
-                    int tmp = nums[i] + nums[k] + nums[j];
-                    if (tmp < 0) {//右侧值偏小
-                        j++;
-                    } else if (tmp > 0) {//右侧值偏大
-                        k--;
-                    } else {//正确值
-                        result.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                        j++;
-                        k--;
+                    if (lnum + rnum + left < 0) {
+                        j ++;
+                    }
+                    if (lnum + rnum + left > 0) {
+                        k --;
+                    }
+                    if (lnum + rnum + left == 0){
+                        result.add(Arrays.asList(left,lnum,rnum));
+                        j ++;
+                        k --;
                     }
                 }
             }
