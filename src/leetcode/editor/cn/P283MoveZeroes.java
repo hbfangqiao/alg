@@ -30,23 +30,20 @@ public class P283MoveZeroes {
         System.out.println(Arrays.toString(input));
     }
 
+
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public void moveZeroes(int[] nums) {
             int j = 0;
-            for (int i = 0; i <nums.length ; i++) {
-                if (nums[i]!=0){
-                    swap(i,j,nums);
+            for (int i = 0; i < nums.length; i++) {
+                if (nums[i] != 0){
+                    nums[j] = nums[i];
+                    if (i != j){
+                        nums[i] = 0;
+                    }
                     j++;
                 }
             }
-        }
-
-        private void swap(int i, int j, int[] nums) {
-            int z=0;
-            z = nums[i];
-            nums[i] = nums[j];
-            nums[j] = z;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -130,4 +127,7 @@ j---------->j
  i------>i~~~~~~~i
  j---------->j
  1 3 3 5 1 3 8 0 0
+
+ 2020/11/25
+ 当慢指针碰到一个0之后，在循环结束前，他碰到的都会是0了。
  */
