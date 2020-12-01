@@ -45,15 +45,15 @@ public class P206ReverseLinkedList {
 
     class Solution {
         public ListNode reverseList(ListNode head) {
-            ListNode prev = null;
-            ListNode curr = head;
-            while (curr != null) {
-                ListNode nextNode = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = nextNode;
+            ListNode pre = null;
+            ListNode cur = head;
+            while (cur!=null){
+                ListNode tmp = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = tmp;
             }
-            return prev;
+            return pre;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -64,6 +64,13 @@ public class P206ReverseLinkedList {
 
         ListNode(int x) {
             val = x;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    '}';
         }
     }
 /*
@@ -79,6 +86,21 @@ public class P206ReverseLinkedList {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+解法：
+public ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode curr = head;
+    while (curr != null) {
+        ListNode nextNode = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+    return prev;
+}
 */
+
+
 }
