@@ -58,15 +58,14 @@ public class P24SwapNodesInPairs {
         public ListNode swapPairs(ListNode head) {
             ListNode pre = new ListNode(-1);
             pre.next = head;
-            ListNode temp = pre;
-
-            while (temp.next != null && temp.next.next != null) {
-                ListNode first = temp.next;
-                ListNode second = temp.next.next;
-                temp.next = second;
+            ListNode tmp = pre;
+            while (tmp.next != null && tmp.next.next !=null){
+                ListNode first = tmp.next;
+                ListNode second = tmp.next.next;
+                tmp.next = second;
                 first.next = second.next;
                 second.next = first;
-                temp = first;
+                tmp = first;
             }
             return pre.next;
         }
@@ -128,7 +127,21 @@ public ListNode swapPairs(ListNode head) {
 }
 
 解法二：遍历
+public ListNode swapPairs(ListNode head) {
+    ListNode pre = new ListNode(-1);
+    pre.next = head;
+    ListNode temp = pre;
 
+    while (temp.next != null && temp.next.next != null) {
+        ListNode first = temp.next;
+        ListNode second = temp.next.next;
+        temp.next = second;
+        first.next = second.next;
+        second.next = first;
+        temp = first;
+    }
+    return pre.next;
+}
 
 */
 }
