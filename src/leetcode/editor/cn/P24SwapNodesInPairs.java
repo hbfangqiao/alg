@@ -56,18 +56,14 @@ public class P24SwapNodesInPairs {
      */
     class Solution {
         public ListNode swapPairs(ListNode head) {
-            ListNode pre = new ListNode(-1);
-            pre.next = head;
-            ListNode tmp = pre;
-            while (tmp.next != null && tmp.next.next !=null){
-                ListNode first = tmp.next;
-                ListNode second = tmp.next.next;
-                tmp.next = second;
-                first.next = second.next;
-                second.next = first;
-                tmp = first;
+            if (head == null || head.next == null) {
+                return head;
             }
-            return pre.next;
+            ListNode newHead = head.next;
+            ListNode tmp = newHead.next;
+            newHead.next = head;
+            head.next = swapPairs(tmp);
+            return newHead;
         }
 
     }
@@ -87,6 +83,13 @@ public class P24SwapNodesInPairs {
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    '}';
         }
     }
 
