@@ -76,15 +76,18 @@ public class P141LinkedListCycle {
     //leetcode submit region begin(Prohibit modification and deletion)
     public class Solution {
         public boolean hasCycle(ListNode head) {
-            ListNode pointNode = head;
-            int count = 0;
-            while (pointNode != null) {
-                pointNode = pointNode.next;
-                count ++;
-                if (count>10000){
+            if (head == null || head.next == null) {
+                return false;
+            }
+            ListNode fast = head;
+            ListNode slow = head;
+            do {
+                fast = fast.next.next;
+                slow = slow.next;
+                if (slow == fast) {
                     return true;
                 }
-            }
+            } while (fast != null && fast.next != null);
             return false;
         }
     }
