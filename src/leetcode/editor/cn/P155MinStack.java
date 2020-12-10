@@ -166,6 +166,41 @@ class MinStack {
 }
 
 解法一：辅助栈
+class MinStack {
 
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int x) {
+        stack.push(x);
+        if (minStack.empty() || minStack.peek() >= x){
+            minStack.push(x);
+        }
+    }
+
+    public void pop() {
+        Integer pop = stack.pop();
+        if (minStack.peek().equals(pop)){
+            minStack.pop();
+        }
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+
+题解二：
+https://leetcode-cn.com/problems/min-stack/solution/zui-yi-dong-yi-ge-zhan-tong-shi-bao-cun-dang-qian-/
 */
 }
