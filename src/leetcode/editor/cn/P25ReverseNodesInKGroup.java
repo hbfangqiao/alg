@@ -32,6 +32,24 @@ public class P25ReverseNodesInKGroup{
     public static void main(String[] args) {
         Solution solution = new P25ReverseNodesInKGroup().new Solution();
         // TO TEST
+        ListNode node1 = new P25ReverseNodesInKGroup().new ListNode(1);
+        ListNode node2 = new P25ReverseNodesInKGroup().new ListNode(2);
+        ListNode node3 = new P25ReverseNodesInKGroup().new ListNode(3);
+        ListNode node4 = new P25ReverseNodesInKGroup().new ListNode(4);
+        ListNode node5 = new P25ReverseNodesInKGroup().new ListNode(5);
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        ListNode reverseNode = solution.reverseKGroup(node1, 5);
+        while (reverseNode != null) {
+            System.out.print(reverseNode.val);
+            System.out.print("->");
+            if (reverseNode.next == null){
+                System.out.print("null");
+            }
+            reverseNode = reverseNode.next;
+        }
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 /**
@@ -46,7 +64,24 @@ public class P25ReverseNodesInKGroup{
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        return null;
+        //判断是否需要翻转-终止条件
+        ListNode pos = head;
+        for (int i = 0; i <k ; i++) {
+            if (pos==null){//不足k个
+                return head;
+            }
+            pos = pos.next;
+        }
+        //翻转链表的k个节点
+        ListNode pre = reverseKGroup(pos,k);
+        ListNode cur = head;
+        for (int i = 0; i <k ; i++) {
+            ListNode tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+        return pre;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -62,9 +97,9 @@ class Solution {
 
 /*
 第一遍：
-1. 5-15分钟读题思考题目
-2. 没有思路则直接看解法，比较解法优劣
-3. 背诵和默写解法
+1. 5-15分钟读题思考题目 √ 有思路，采用递归，每个递归进行翻转链表。跳出条件为 节点数目不够。返回值为新的头节点
+2. 没有思路则直接看解法，比较解法优劣 √ 其它人的解法看起来有些复杂，我的代码相对简单
+3. 背诵和默写解法 √ 提交通过
 第二遍
 1. 马上自己写 -> LeeCode提交
 2. 多种解法比较，体会 -> 优化
@@ -73,6 +108,29 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的解法：
+public ListNode reverseKGroup(ListNode head, int k) {
+    //判断是否需要翻转-终止条件
+    ListNode pos = head;
+    for (int i = 0; i <k ; i++) {
+        if (pos==null){//不足k个
+            return head;
+        }
+        pos = pos.next;
+    }
+    //翻转链表的k个节点
+    ListNode pre = reverseKGroup(pos,k);
+    ListNode cur = head;
+    for (int i = 0; i <k ; i++) {
+        ListNode tmp = cur.next;
+        cur.next = pre;
+        pre = cur;
+        cur = tmp;
+    }
+    return pre;
+}
+
 */
 }
