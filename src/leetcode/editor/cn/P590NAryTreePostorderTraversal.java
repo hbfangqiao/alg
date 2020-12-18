@@ -19,6 +19,7 @@
 package leetcode.editor.cn;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //Java：N叉树的后序遍历
@@ -26,6 +27,16 @@ public class P590NAryTreePostorderTraversal{
     public static void main(String[] args) {
         Solution solution = new P590NAryTreePostorderTraversal().new Solution();
         // TO TEST
+        Node node1 = new P590NAryTreePostorderTraversal().new Node(1,new ArrayList<>());
+        Node node2 = new P590NAryTreePostorderTraversal().new Node(2,new ArrayList<>());
+        Node node3 = new P590NAryTreePostorderTraversal().new Node(3,new ArrayList<>());
+        Node node4 = new P590NAryTreePostorderTraversal().new Node(4,new ArrayList<>());
+        Node node5 = new P590NAryTreePostorderTraversal().new Node(5,new ArrayList<>());
+        Node node6 = new P590NAryTreePostorderTraversal().new Node(6,new ArrayList<>());
+        node1.children = Arrays.asList(node3,node2,node4);
+        node3.children = Arrays.asList(node5,node6);
+        List<Integer> preorder = solution.postorder(node1);
+        System.out.println(preorder);
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 /*
