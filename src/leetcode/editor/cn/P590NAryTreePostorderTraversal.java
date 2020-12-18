@@ -50,22 +50,18 @@ class Node {
 class Solution {
     public List<Integer> postorder(Node root) {
         List<Integer> result = new ArrayList<>();
-        if (root == null){
-            return result;
-        }
-        order(root.children,result);
-        result.add(root.val);
+        order(root,result);
         return result;
     }
 
-    private void order(List<Node> children,List<Integer> res){
-        if (children == null || children.size() == 0){
+    private void order(Node root,List<Integer> res){
+        if (root == null) {
             return;
         }
-        children.forEach(e -> {
-            order(e.children,res);
-            res.add(e.val);
-        });
+        for(Node node: root.children){
+            order(node,res);
+        }
+        res.add(root.val);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -86,8 +82,10 @@ class Node {
 };
 /*
 第一遍：
-1. 5-15分钟读题思考题目
-2. 没有思路则直接看解法，比较解法优劣
+1. 5-15分钟读题思考题目 √
+2. 比较解法优劣 √
+我以子节点是否为空作为判断，代码写起来看着很冗余
+
 3. 背诵和默写解法
 第二遍
 1. 马上自己写 -> LeeCode提交
@@ -97,6 +95,29 @@ class Node {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的解法：
+    public List<Integer> postorder(Node root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null){
+            return result;
+        }
+        order(root.children,result);
+        result.add(root.val);
+        return result;
+    }
+
+    private void order(List<Node> children,List<Integer> res){
+        if (children == null || children.size() == 0){
+            return;
+        }
+        children.forEach(e -> {
+            order(e.children,res);
+            res.add(e.val);
+        });
+    }
+
+
 */
 }
