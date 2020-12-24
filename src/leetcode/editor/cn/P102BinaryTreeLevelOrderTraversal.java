@@ -29,12 +29,10 @@
 package leetcode.editor.cn;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 //Java：二叉树的层序遍历
-public class P102BinaryTreeLevelOrderTraversal{
+public class P102BinaryTreeLevelOrderTraversal {
     public static void main(String[] args) {
         Solution solution = new P102BinaryTreeLevelOrderTraversal().new Solution();
         // TO TEST
@@ -54,48 +52,47 @@ public class P102BinaryTreeLevelOrderTraversal{
         });
     }
     //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> results = new ArrayList<>();
-        if (root == null){
+
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     * int val;
+     * TreeNode left;
+     * TreeNode right;
+     * TreeNode(int x) { val = x; }
+     * }
+     */
+    class Solution {
+        public List<List<Integer>> levelOrder(TreeNode root) {
+            List<List<Integer>> results = new ArrayList<>();
+            dfs(root,0,results);
             return results;
         }
-        Queue<TreeNode> nodes = new LinkedList<>();
-        nodes.add(root);
-        while (!nodes.isEmpty()){
-            int n = nodes.size();
-            List<Integer> result = new ArrayList<>();
-            for (int i = 0; i <n ; i++) {
-                TreeNode node = nodes.poll();
-                result.add(node.val);
-                if (node.left!=null){
-                    nodes.add(node.left);
-                }
-                if (node.right!=null){
-                    nodes.add(node.right);
-                }
+
+        private void dfs(TreeNode node, int level, List<List<Integer>> results) {
+            if (node == null) {
+                return;
             }
-            results.add(result);
+            if (results.size() < level + 1) {
+                results.add(new ArrayList<>());
+            }
+            List<Integer> list = results.get(level);
+            list.add(node.val);
+            dfs(node.left, level + 1, results);
+            dfs(node.right, level + 1, results);
         }
-        return results;
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
-public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) { val = x; }
-}
+
+    //leetcode submit region end(Prohibit modification and deletion)
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
 /*
 第一遍：
 1. 5-15分钟读题思考题目
@@ -141,5 +138,24 @@ public List<List<Integer>> levelOrder(TreeNode root) {
     return results;
 }
 
+DFS 我的解法：解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户 内存消耗:38.6 MB,击败了74.46% 的Java用户
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> results = new ArrayList<>();
+    dfs(root,0,results);
+    return results;
+}
+
+private void dfs(TreeNode node, int level, List<List<Integer>> results) {
+    if (node == null) {
+        return;
+    }
+    if (results.size() < level + 1) {
+        results.add(new ArrayList<>());
+    }
+    List<Integer> list = results.get(level);
+    list.add(node.val);
+    dfs(node.left, level + 1, results);
+    dfs(node.right, level + 1, results);
+}
 */
 }
