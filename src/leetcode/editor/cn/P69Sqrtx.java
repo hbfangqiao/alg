@@ -29,27 +29,18 @@ public class P69Sqrtx {
         Solution solution = new P69Sqrtx().new Solution();
         // TO TEST
         System.out.println(solution.mySqrt(2147395599));
-        int s = 2 + (3 -2)/2;
+        int s = 2 + (3 - 2) / 2;
         System.out.println(s);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public int mySqrt(int x) {
-            if (x == 0 || x == 1) {
-                return x;
+        public int mySqrt(int a) {
+            long x = a;//初始迭代点
+            while (x * x > a) {
+                x = (x + a/x)/2;
             }
-            int left = 1;
-            int right = x;
-            while (left <= right){
-                int mid = left+(right - left)/2  ;
-                if ((long)mid * mid > x){
-                    right = mid - 1;
-                }else {
-                    left = mid + 1;
-                }
-            }
-            return right;
+            return (int) x;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -65,6 +56,14 @@ public class P69Sqrtx {
 2. 没有思路则直接看解法，比较解法优劣
 a.二分查找
 针对边界条件自己不好确定的，可以选择 一个 中间值验证 比如 实践答案 是 2.236 可以 left=2 right=3 进行验证
+b.牛顿迭代法
+参考资料：
+解释牛顿迭代法是什么：https://www.zhihu.com/question/20690553
+牛顿迭代法由x 推导 x+1 https://blog.csdn.net/batuwuhanpei/article/details/51979831
+题解参考：https://blog.csdn.net/batuwuhanpei/article/details/51979831
+思考：牛顿迭代法本来只能无限趋近于目标值，理论上会无限循环下去。为什么计算机可以在有限次数求得答案?
+因为计算机有精度丢失，高位小数会被截断 。实际求得的值会更小
+
 3. 背诵和默写解法
 第二遍
 1. 马上自己写 -> LeeCode提交
@@ -74,6 +73,24 @@ a.二分查找
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+解法一：二分查找
+public int mySqrt(int x) {
+    if (x == 0 || x == 1) {
+        return x;
+    }
+    int left = 1;
+    int right = x;
+    while (left <= right){
+        int mid = left+(right - left)/2  ;
+        if ((long)mid * mid > x){
+            right = mid - 1;
+        }else {
+            left = mid + 1;
+        }
+    }
+    return right;
+}
 */
 }
