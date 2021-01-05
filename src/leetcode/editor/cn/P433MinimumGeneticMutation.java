@@ -54,6 +54,7 @@
 package leetcode.editor.cn;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 //Java：最小基因变化
 public class P433MinimumGeneticMutation {
@@ -68,35 +69,48 @@ public class P433MinimumGeneticMutation {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int minMutation(String start, String end, String[] bank) {
-            HashSet<String> set = new HashSet<String>(Arrays.asList(bank));
-            if (!set.contains(end)){
+            Set<String> bankSet = new HashSet<>(Arrays.stream(bank).collect(Collectors.toList()));
+            if (!bankSet.contains(end)){
                 return -1;
             }
-            char[] four = {'A', 'C', 'G', 'T'};
-            Queue<String> queue = new LinkedList<>();
-            queue.offer(start);
-            set.remove(start);
-            int step = 0;
-            while (!queue.isEmpty()){
-                int n = queue.size();
-                step++;
-                for (int i = 0; i <n ; i++) {
-                    char[] tmpchars = queue.poll().toCharArray();
-                    for (int index = 0; index < tmpchars.length; index++) {
-                        char old = tmpchars[index];
-                        for (int j = 0; j < 4; j++) {
-                            tmpchars[index] = four[j];
-                            String newString = new String(tmpchars);
-                            if (end.equals(newString)){
+            Set<String> beginSet = new HashSet<>();
+            Set<String> endSet = new HashSet<>();
+            Set<String> visited = new HashSet<>();
+            beginSet.add(start);
+            bankSet.remove(start);
+            endSet.add(end);
+            int step = 1;
+            char[] canUseChars = new char[]{'A','C','G','T'};
+            while (!beginSet.isEmpty() && !endSet.isEmpty()){
+                if (beginSet.size() > endSet.size()){
+                    Set<String> tmp = beginSet;
+                    beginSet = endSet;
+                    endSet = tmp;
+                }
+                Set<String> tempSet = new HashSet<>();
+                for(String genetic: beginSet){
+                    char[] geneticChars = genetic.toCharArray();
+                    for (int i = 0; i <geneticChars.length ; i++) {
+                        char old = geneticChars[i];
+                        for (char c: canUseChars){
+                            geneticChars[i] = c;
+                            if (c == old){
+                                continue;
+                            }
+                            String newGenetic = String.valueOf(geneticChars);
+                            if (endSet.contains(newGenetic)){
                                 return step;
-                            }else if(set.contains(newString)){
-                                set.remove(newString);
-                                queue.add(newString);
+                            }
+                            if (!visited.contains(newGenetic)&&bankSet.contains(newGenetic)){
+                                visited.add(newGenetic);
+                                tempSet.add(newGenetic);
                             }
                         }
-                        tmpchars[index] = old;
+                        geneticChars[i] = old;
                     }
                 }
+                beginSet = tempSet;
+                step++;
             }
             return -1;
         }
@@ -110,6 +124,7 @@ public class P433MinimumGeneticMutation {
 没有读懂题目，开始认为由 start -> end 的 最小基因变化就是 字符不同的位数。不需要进行计算。没有考虑到 bank中是否有可以变化过去的路线
 BFS：针对 AACCGGTT start, 针对每一层。 依次将 每一位候补对象每一位 替换成ACGT 判断是否在bank中。
 如果存在则替换。进入下一层。直到找到 和end相同的结果
+双向BFS
 
 3. 背诵和默写解法
 第二遍
@@ -120,6 +135,41 @@ BFS：针对 AACCGGTT start, 针对每一层。 依次将 每一位候补对象�
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+单向BFS:
+public int minMutation(String start, String end, String[] bank) {
+    HashSet<String> set = new HashSet<String>(Arrays.asList(bank));
+    if (!set.contains(end)){
+        return -1;
+    }
+    char[] four = {'A', 'C', 'G', 'T'};
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(start);
+    set.remove(start);
+    int step = 0;
+    while (!queue.isEmpty()){
+        int n = queue.size();
+        step++;
+        for (int i = 0; i <n ; i++) {
+            char[] tmpchars = queue.poll().toCharArray();
+            for (int index = 0; index < tmpchars.length; index++) {
+                char old = tmpchars[index];
+                for (int j = 0; j < 4; j++) {
+                    tmpchars[index] = four[j];
+                    String newString = new String(tmpchars);
+                    if (end.equals(newString)){
+                        return step;
+                    }else if(set.contains(newString)){
+                        set.remove(newString);
+                        queue.add(newString);
+                    }
+                }
+                tmpchars[index] = old;
+            }
+        }
+    }
+    return -1;
+}
 */
 }
