@@ -26,24 +26,72 @@ public class P125ValidPalindrome {
         // TO TEST
         boolean aba = solution.isPalindrome("A man, a plan, a canal: Panama");
         System.out.println(aba);
+        System.out.println(solution.isPalindrome("race a car"));
+        System.out.println(solution.isPalindrome("  "));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public boolean isPalindrome(String s) {
-            s = filterNotLetterAndNumber(s);
-            return s.equalsIgnoreCase(reverseString(s));
+            if (s == null || s.length() == 0){
+                return true;
+            }
+            char[] chars = s.toCharArray();
+            for (int i = 0,j=chars.length - 1; i <= j ;) {
+                char left = chars[i];
+                char right = chars[j];
+                if (!isValid(left)){
+                    i++;continue;
+                }
+                if (!isValid(right)){
+                    j--;continue;
+                }
+                if (!String.valueOf(left).equalsIgnoreCase(String.valueOf(right))){
+                    return false;
+                }
+                i++;j--;
+            }
+            return true;
         }
 
-        private String reverseString(String s) {
-            return new StringBuilder(s).reverse().toString();
+        private boolean isValid(char c){
+            return (c >= 'a' && c <= 'z') || (c >= 'A' && c<='Z') || (c >='0'&& c<='9');
         }
 
-        private String filterNotLetterAndNumber(String s) {
-            return s.replaceAll("[^0-9a-zA-Z]","");
-
-        }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
+/*
+第一遍：
+1. 5-15分钟读题思考题目 √
+2. 没有思路则直接看解法，比较解法优劣 √
+调用javaAPI
+3. 背诵和默写解法 √
+第二遍 √
+1. 马上自己写 -> LeeCode提交
+2. 多种解法比较，体会 -> 优化
+第三遍
+1. 过了一天后重复练习相同题目
+使用双指针往中间移动的解法
+
+第四遍
+1. 过了一周重复练习
+第五遍
+1. 面试前一周重复练习
+
+javaAPI解法：
+public boolean isPalindrome(String s) {
+    s = filterNotLetterAndNumber(s);
+    return s.equalsIgnoreCase(reverseString(s));
+}
+
+private String reverseString(String s) {
+    return new StringBuilder(s).reverse().toString();
+}
+
+private String filterNotLetterAndNumber(String s) {
+    return s.replaceAll("[^0-9a-zA-Z]","");
+
+}
+*/
