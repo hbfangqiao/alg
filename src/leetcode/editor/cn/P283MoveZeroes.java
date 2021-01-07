@@ -35,14 +35,14 @@ public class P283MoveZeroes {
     class Solution {
         public void moveZeroes(int[] nums) {
             int j = 0;
-            for (int i = 0; i < nums.length; i++) {
-                if (nums[i] != 0){
-                    nums[j] = nums[i];
-                    if (i != j){
-                        nums[i] = 0;
-                    }
-                    j++;
+            for (int i = 0; i <nums.length ; i++) {
+                if (nums[i]==0){
+                    continue;
                 }
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+                j++;
             }
         }
     }
@@ -60,9 +60,10 @@ public class P283MoveZeroes {
  第二遍
  1. 马上自己写 -> LeeCode提交 g√
  2. 多种解法比较,理解其他人的思路
- 第三遍
- 1.
+ 第三遍 √
+ 终于自己写来了，但是写的还不够熟练
 
+ 1.
 
  最优解 时间复杂度 O(n)
 
