@@ -51,65 +51,72 @@
 
 package leetcode.editor.cn;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 //Java：滑动谜题
-public class P773SlidingPuzzle{
+public class P773SlidingPuzzle {
     public static void main(String[] args) {
         Solution solution = new P773SlidingPuzzle().new Solution();
         // TO TEST
 //        int[][] board = {{4,1,2},{5,0,3}};
-        int[][] board = {{1,2,3},{4,5,0}};
+//        int[][] board = {{1, 2, 3}, {4, 5, 0}};
+        int[][] board = {{0, 5, 2}, {1, 3, 4}};
+        long now = System.currentTimeMillis();
         System.out.println(solution.slidingPuzzle(board));
+        System.out.println(System.currentTimeMillis() - now);
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int slidingPuzzle(int[][] board) {
-        int[][] moves = {{1,3},{0,2,4},{1,5},{0,4},{1,3,5},{2,4}};
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i <board.length ; i++) {
-            int[] boardRow = board[i];
-            for (int j = 0; j <boardRow.length ; j++) {
-                builder.append(boardRow[j]);
-            }
-        }
-        if ("123450".equals(builder.toString())){
-            return 0;
-        }
-        Queue<String> queue = new LinkedList<>();
-        queue.offer(builder.toString());
-        Set<String> visited = new HashSet<>();
-        visited.add(builder.toString());
-        int step = 0;
-        while (!queue.isEmpty()){
-            int n = queue.size();
-            for (int i = 0; i <n ; i++) {
-                String boardString = queue.poll();
-                int zeroIndex = boardString.indexOf('0');
-                for (int move : moves[zeroIndex]){
-                    char[] chars = boardString.toCharArray();
-                    chars[zeroIndex] = chars[move];
-                    chars[move] = '0';
-                    String newBoardString = String.valueOf(chars);
-                    if ("123450".equals(newBoardString)){
-                        return step + 1;
-                    }
-                    if (!visited.contains(newBoardString)){
-                        visited.add(newBoardString);
-                        queue.offer(newBoardString);
-                    }
+    class Solution {
+
+        private int[][] moves = {{1, 3}, {0, 2, 4}, {1, 5}, {0, 4}, {5, 3, 1}, {2, 4}};
+        private Integer minStep = Integer.MAX_VALUE;
+        private Map<String,Integer> canReachMinStep = new HashMap<>();
+
+        public int slidingPuzzle(int[][] board) {
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < board.length; i++) {
+                int[] boardRow = board[i];
+                for (int j = 0; j < boardRow.length; j++) {
+                    builder.append(boardRow[j]);
                 }
             }
-            step ++;
+            if ("123450".equals(builder.toString())) {
+                return 0;
+            }
+            List<String> path = new ArrayList<>();
+            path.add(builder.toString());
+            dfs(builder.toString(),path);
+            canReachMinStep.put(board.toString(),0);
+            return minStep == Integer.MAX_VALUE ? -1 : minStep;
         }
-        return -1;
+
+        private void dfs(String board, List<String> path) {
+            if ("123450".equals(board)) {
+                minStep = Math.min(path.size() - 1,minStep);
+                return;
+            }
+            Integer zeroIndex = board.indexOf('0');
+            for(int move : moves[zeroIndex]){
+                char[] chars = board.toCharArray();
+                chars[zeroIndex] = chars[move];
+                chars[move] = '0';
+                String newBoard = String.valueOf(chars);
+                Integer minStep = canReachMinStep.get(newBoard);
+                if (minStep != null && minStep <= path.size() - 1){
+                    continue;
+                }
+                path.add(newBoard);
+                canReachMinStep.put(newBoard,path.size() - 1);
+                dfs(newBoard,path);
+                path.remove(newBoard);
+            }
+
+        }
+
+
     }
-
-
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
@@ -131,6 +138,49 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的解法：BFS
+public int slidingPuzzle(int[][] board) {
+    int[][] moves = {{1,3},{0,2,4},{1,5},{0,4},{1,3,5},{2,4}};
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i <board.length ; i++) {
+        int[] boardRow = board[i];
+        for (int j = 0; j <boardRow.length ; j++) {
+            builder.append(boardRow[j]);
+        }
+    }
+    if ("123450".equals(builder.toString())){
+        return 0;
+    }
+    Queue<String> queue = new LinkedList<>();
+    queue.offer(builder.toString());
+    Set<String> visited = new HashSet<>();
+    visited.add(builder.toString());
+    int step = 0;
+    while (!queue.isEmpty()){
+        int n = queue.size();
+        for (int i = 0; i <n ; i++) {
+            String boardString = queue.poll();
+            int zeroIndex = boardString.indexOf('0');
+            for (int move : moves[zeroIndex]){
+                char[] chars = boardString.toCharArray();
+                chars[zeroIndex] = chars[move];
+                chars[move] = '0';
+                String newBoardString = String.valueOf(chars);
+                if ("123450".equals(newBoardString)){
+                    return step + 1;
+                }
+                if (!visited.contains(newBoardString)){
+                    visited.add(newBoardString);
+                    queue.offer(newBoardString);
+                }
+            }
+        }
+        step ++;
+    }
+    return -1;
+}
+
 */
 }
