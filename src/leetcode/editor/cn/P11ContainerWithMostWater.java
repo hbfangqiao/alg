@@ -35,10 +35,14 @@ public class P11ContainerWithMostWater {
     class Solution {
         public int maxArea(int[] height) {
             int maxArea = 0;
-            for (int i = 0, j = height.length - 1; i < j; ) {
-                int bottom = j - i;
-                int high = height[i] < height[j] ? height[i++] : height[j--];
-                maxArea = maxArea > bottom * high ? maxArea : bottom * high;
+            for (int i = 0,j=height.length - 1; i < j ;) {
+                int area = (j - i) * Math.min(height[i],height[j]);
+                maxArea = Math.max(maxArea,area);
+                if (height[i] < height[j]){
+                    i++;
+                }else {
+                    j--;
+                }
             }
             return maxArea;
         }
@@ -54,7 +58,8 @@ public class P11ContainerWithMostWater {
 1. 马上自己写 -> LeeCode提交  √
 2. 多种解法比较，体会 -> 优化  √
 第三遍
-1. 过了一天后重复练习相同题目
+1. 过了一天后重复练习相同题目 √
+双指针 j-- 写成了j++ 调试后通过
 第四遍
 1. 过了一周重复练习
 第五遍
