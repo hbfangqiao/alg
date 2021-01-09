@@ -27,6 +27,9 @@
 
 package leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //Java：爬楼梯
 public class P70ClimbingStairs {
     public static void main(String[] args) {
@@ -37,37 +40,42 @@ public class P70ClimbingStairs {
         System.out.println(solution.climbStairs(3));
         System.out.println(solution.climbStairs(4));
         System.out.println(solution.climbStairs(5));
+        System.out.println(solution.climbStairs(6));
+        System.out.println(solution.climbStairs(7));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        private Map<Integer,Integer> stepCache = new HashMap<>();
         public int climbStairs(int n) {
             if (n <= 2) {
                 return n;
             }
-            int f1 = 1;
-            int f2 = 2;
-            int result = 0;
-            for (int i = 3; i <= n; i++) {
-                result = f1 + f2;
-                f1 = f2;
-                f2 = result;
+            if (stepCache.containsKey(n)){
+                return stepCache.get(n);
             }
-            return result;
+            int step = climbStairs(n - 1) + climbStairs(n - 2);
+            stepCache.put(n,step);
+            return step;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
 第一遍：
-1. 5-15分钟读题思考题目
-2. 没有思路则直接看解法，比较解法优劣
-3. 背诵和默写解法
-第二遍
+1. 5-15分钟读题思考题目 √
+2. 没有思路则直接看解法，比较解法优劣 √
+迭代 O(n) 傻递归O(2^n)
+3. 背诵和默写解法 √
+第二遍 √
 1. 马上自己写 -> LeeCode提交
 2. 多种解法比较，体会 -> 优化
-第三遍
-1. 过了一天后重复练习相同题目
+第三遍 √
+1. 过了一天后重复练习相同题目 √
+使用递归加hash缓存的方法：
+解答成功:
+执行耗时:0 ms,击败了100.00% 的Java用户
+内存消耗:35.4 MB,击败了16.57% 的Java用户
 第四遍
 1. 过了一周重复练习
 第五遍
