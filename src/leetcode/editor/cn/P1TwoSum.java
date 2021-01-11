@@ -19,7 +19,6 @@ package leetcode.editor.cn;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 //Java：两数之和
 public class P1TwoSum {
@@ -35,8 +34,8 @@ public class P1TwoSum {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int[] twoSum(int[] nums, int target) {
-            Map<Integer, Integer> map = new HashMap<>();
-            for (int i = 0; i < nums.length; i++) {
+            HashMap<Integer,Integer> map = new HashMap<>();
+            for (int i = 0; i <nums.length ; i++) {
                 if (map.get(target - nums[i]) != null){
                     return new int[]{i,map.get(target - nums[i])};
                 }
@@ -56,7 +55,7 @@ public class P1TwoSum {
 1. 马上自己写 -> LeeCode提交 √
 2. 多种解法比较，体会 -> 优化
 第三遍
-1. 过了一天后重复练习相同题目
+1. 过了一天后重复练习相同题目 √
 第四遍
 1. 过了一周重复练习
 第五遍
@@ -72,6 +71,18 @@ public int[] twoSum(int[] nums, int target) {
                 return new int[]{i,j};
             }
         }
+    }
+    return new int[]{};
+}
+
+hash 表加速:O(n)
+public int[] twoSum(int[] nums, int target) {
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < nums.length; i++) {
+        if (map.get(target - nums[i]) != null){
+            return new int[]{i,map.get(target - nums[i])};
+        }
+        map.put(nums[i],i);
     }
     return new int[]{};
 }
