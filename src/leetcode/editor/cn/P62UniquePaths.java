@@ -51,43 +51,57 @@
 
 package leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //Java：不同路径
 public class P62UniquePaths {
     public static void main(String[] args) {
         Solution solution = new P62UniquePaths().new Solution();
         // TO TEST
-        System.out.println(solution.uniquePaths(1, 1));
+        System.out.println(solution.uniquePaths(3, 3));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-
-        private int count = 0;
+        private Map<String,Integer> map = new HashMap<>();
 
         public int uniquePaths(int m, int n) {
-            dfs(1,1,m,n);
+            return unique(1,1,m,n);
+        }
+
+        private int unique(int cX,int cY,int m,int n){
+            if (cX == m && cY == n){
+                return 1;
+            }
+            if (map.containsKey(cX+","+cY)){
+                return map.get(cX+","+cY);
+            }
+            if (cX+1>m){
+                int count = unique(cX,cY+1,m,n);
+                map.put(cX+","+cY,count);
+                return count;
+            }
+            if (cY+1>n){
+                int count = unique(cX+1,cY,m,n);
+                map.put(cX+","+cY,count);
+                return count;
+            }
+            int count = unique(cX+1,cY,m,n) + unique(cX,cY+1,m,n);
+            map.put(cX+","+cY,count);
             return count;
         }
 
-        private void dfs(int cX,int cY,int m,int n){
-            if (cX == m && cY == n){
-                count++;
-                return;
-            }
-            if (cX+1 <= m){
-                dfs(cX+1,cY,m,n);
-            }
-            if (cY+1 <= n){
-                dfs(cX,cY+1,m,n);
-            }
-        }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
 第一遍：
-1. 5-15分钟读题思考题目
+1. 5-15分钟读题思考题目 √
+使用dfs解法，超时
 2. 没有思路则直接看解法，比较解法优劣
+使用递推，根据思路，自己写出来
+
 3. 背诵和默写解法
 第二遍
 1. 马上自己写 -> LeeCode提交
