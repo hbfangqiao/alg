@@ -43,12 +43,15 @@
 
 
 package leetcode.editor.cn;
+
+import java.util.Arrays;
+
 //Java：最长公共子序列
 public class P1143LongestCommonSubsequence{
     public static void main(String[] args) {
         Solution solution = new P1143LongestCommonSubsequence().new Solution();
         // TO TEST
-        System.out.println(solution.longestCommonSubsequence("apoiud","aioqod"));
+        System.out.println(solution.longestCommonSubsequence("aacde","ace"));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -66,6 +69,9 @@ class Solution {
                     dp[i+1][j+1] = Math.max(dp[i+1][j],dp[i][j+1]);
                 }
             }
+        }
+        for (int i = 0; i <dp.length ; i++) {
+            System.out.println(Arrays.toString(dp[i]));
         }
         return dp[m][n];
     }
