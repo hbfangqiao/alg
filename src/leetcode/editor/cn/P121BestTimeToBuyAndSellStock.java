@@ -42,22 +42,23 @@ public class P121BestTimeToBuyAndSellStock{
         Solution solution = new P121BestTimeToBuyAndSellStock().new Solution();
         // TO TEST
         System.out.println(solution.maxProfit(new int[]{7,1,5,3,6,4}));
-        System.out.println(solution.maxProfit(new int[]{7,6,4,3,1}));
-        System.out.println(solution.maxProfit(new int[]{2,4,1,9}));
+//        System.out.println(solution.maxProfit(new int[]{7,6,4,3,1}));
+//        System.out.println(solution.maxProfit(new int[]{2,4,1,9}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int maxProfit(int[] prices) {
-        if (prices.length == 0 || prices.length == 1){
+        if (prices.length < 2){
             return 0;
         }
-        int minPrice = prices[0];
-        int result = 0;
-        for (int i = 0; i <prices.length ; i++) {
-            minPrice = Math.min(prices[i],minPrice);
-            result = Math.max(result,prices[i] - minPrice);
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        for (int i = 1; i <prices.length ; i++) {
+            dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1],-prices[i]);
         }
-        return result;
+        return dp[prices.length-1][0];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -76,6 +77,23 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+
+思路一: 一次遍历
+public int maxProfit(int[] prices) {
+    if (prices.length == 0 || prices.length == 1){
+        return 0;
+    }
+    int minPrice = prices[0];
+    int result = 0;
+    for (int i = 0; i <prices.length ; i++) {
+        minPrice = Math.min(prices[i],minPrice);
+        result = Math.max(result,prices[i] - minPrice);
+    }
+    return result;
+}
+
+思路二: DP
 */
 }
