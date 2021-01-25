@@ -47,30 +47,38 @@ public class P122BestTimeToBuyAndSellStockIi{
     public static void main(String[] args) {
         Solution solution = new P122BestTimeToBuyAndSellStockIi().new Solution();
         // TO TEST
+        System.out.println(solution.maxProfit(new int[]{7,1,5,3,6,4}));
+        System.out.println(solution.maxProfit(new int[]{7,6,4,3,1}));
         System.out.println(solution.maxProfit(new int[]{1,2,3,4,5}));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int maxProfit(int[] prices) {
-        int profit = 0;
-        if (prices == null || prices.length <2){
-            return profit;
+        if (prices.length < 2){
+            return 0;
         }
-        for (int i = 0; i <prices.length -1 ; i++) {
-            if (prices[i]<prices[i+1]){
-                profit+= (prices[i+1] - prices[i]);
-            }
+        int[][] dp = new int[prices.length][2];
+        dp[0][0] = 0;
+        dp[0][1] = -prices[0];
+        for (int i = 1; i <prices.length ; i++) {
+            dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0] - prices[i]);
         }
-        return profit;
+        return dp[prices.length - 1][0];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
 第一遍：
-1. 5-15分钟读题思考题目
+1. 5-15分钟读题思考题目 √
 贪心算法：时间复杂度O(n) 空间复杂度O(1)
-2. 没有思路则直接看解法，比较解法优劣
+DP：与买卖股票的最佳时机1 相比差别就是 本题可以多次买入
+P121  如果当天持股，之前一定是没有发生任何交易的。只需要 减去当天的交易金额
+P122本题  如果当天持股。是前一天不持股时的总钱数 + 今天买入的钱
+
+
+2. 没有思路则直接看解法，比较解法优劣 √
 3. 背诵和默写解法
 第二遍
 1. 马上自己写 -> LeeCode提交
@@ -80,6 +88,20 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+贪心解法: 时间复杂度O(n) 空间复杂度O(1)
+public int maxProfit(int[] prices) {
+    int profit = 0;
+    if (prices == null || prices.length <2){
+        return profit;
+    }
+    for (int i = 0; i <prices.length -1 ; i++) {
+        if (prices[i]<prices[i+1]){
+            profit+= (prices[i+1] - prices[i]);
+        }
+    }
+    return profit;
+}
 */
 }
