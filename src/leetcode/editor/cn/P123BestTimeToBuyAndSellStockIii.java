@@ -60,6 +60,9 @@ public class P123BestTimeToBuyAndSellStockIii{
         System.out.println(solution.maxProfit(new int[]{3,3,5,0,0,3,1,4}));
         System.out.println(solution.maxProfit(new int[]{1,2,3,4,5}));
         System.out.println(solution.maxProfit(new int[]{7,6,4,3,1}));
+        /**
+         *
+         */
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
@@ -87,7 +90,7 @@ class Solution {
 
 /*
 第一遍：
-1. 5-15分钟读题思考题目
+1. 5-15分钟读题思考题目 √ 无DP思路
 2. 没有思路则直接看解法，比较解法优劣
 3. 背诵和默写解法
 第二遍
@@ -98,6 +101,17 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+	买入1	卖出1	买入2	卖出2
+3	-3	    0	      -3     0
+3	-3	    0	      -3     0
+5	-3	    2	      -3     2
+0	0	    2	      2	     2
+0	0	    2	      2	     2
+3	0	    3	      2	     5
+1	0	    3	      2	     5
+4	0	    4	      2	     6
+
 */
 }
