@@ -41,21 +41,18 @@ public class P338CountingBits{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] countBits(int num) {
-        int[] result = new int[num+1];
-        for (int i = 0; i <=num ; i++) {
-            result[i] = hammingWeight(i);
+        int[] dp = new int[num+1];
+        dp[0] = 0;
+        for (int i = 1; i <=num ; i++) {
+            if ((i & 1) == 0){
+                dp[i] = dp[i >> 1];
+            }else {
+                dp[i] = dp[i-1]+1;
+            }
         }
-        return result;
+        return dp;
     }
 
-    private int hammingWeight(int n){
-        int count = 0;
-        while (n!=0){
-            n = n & (n - 1);
-            count ++;
-        }
-        return count;
-    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
 
@@ -72,6 +69,27 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+解法一：遍历每个数，依次求hammingWeight 时间复杂度O(nk) k为 n的二进制长度
+public int[] countBits(int num) {
+    int[] result = new int[num+1];
+    for (int i = 0; i <=num ; i++) {
+        result[i] = hammingWeight(i);
+    }
+    return result;
+}
+
+private int hammingWeight(int n){
+    int count = 0;
+    while (n!=0){
+        n = n & (n - 1);
+        count ++;
+    }
+    return count;
+}
+
+解法二: dp 时间复杂度O(n)
+https://leetcode-cn.com/problems/counting-bits/solution/hen-qing-xi-de-si-lu-by-duadua/
 */
 }
