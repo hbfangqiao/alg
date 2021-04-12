@@ -64,15 +64,19 @@ class Solution {
         }
         char[] sChars = s.toCharArray();
         char[] pChars = p.toCharArray();
-        Arrays.sort(pChars);
-        char[] tmp = new char[pChars.length];
-        for (int i = p.length() - 1; i < sChars.length ; i++) {
-            //0 1 2
-            for (int j = 0; j <tmp.length ; j++) {
-                tmp[j] = sChars[i - j];
-            }
-            Arrays.sort(tmp);
-            if (Arrays.equals(tmp,pChars)){
+        int[] sArray = new int[26];
+        int[] pArray = new int[26];
+        for (int i = 0; i <pChars.length ; i++) {
+            pArray[pChars[i] - 'a']++;
+            sArray[sChars[i] - 'a']++;
+        }
+        if (Arrays.equals(sArray,pArray)){
+            result.add(0);
+        }
+        for (int i = pChars.length; i <sChars.length ; i++) {
+            sArray[sChars[i - pChars.length] - 'a'] --;
+            sArray[sChars[i] - 'a']++;
+            if (Arrays.equals(sArray,pArray)){
                 result.add(i - pChars.length + 1);
             }
         }
@@ -113,6 +117,33 @@ public List<Integer> findAnagrams(String s, String p) {
         }
         Arrays.sort(tmp);
         if (Arrays.equals(tmp,pChars)){
+            result.add(i - pChars.length + 1);
+        }
+    }
+    return result;
+}
+
+解法二：时间复杂度O(N)
+public List<Integer> findAnagrams(String s, String p) {
+    List<Integer> result = new ArrayList<>();
+    if (s == null || s.length() == 0 || s.length() < p.length()){
+        return result;
+    }
+    char[] sChars = s.toCharArray();
+    char[] pChars = p.toCharArray();
+    int[] sArray = new int[26];
+    int[] pArray = new int[26];
+    for (int i = 0; i <pChars.length ; i++) {
+        pArray[pChars[i] - 'a']++;
+        sArray[sChars[i] - 'a']++;
+    }
+    if (Arrays.equals(sArray,pArray)){
+        result.add(0);
+    }
+    for (int i = pChars.length; i <sChars.length ; i++) {
+        sArray[sChars[i - pChars.length] - 'a'] --;
+        sArray[sChars[i] - 'a']++;
+        if (Arrays.equals(sArray,pArray)){
             result.add(i - pChars.length + 1);
         }
     }
