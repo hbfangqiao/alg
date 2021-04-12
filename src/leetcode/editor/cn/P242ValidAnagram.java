@@ -22,8 +22,7 @@
 
 package leetcode.editor.cn;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 //Java：有效的字母异位词
 public class P242ValidAnagram{
@@ -43,20 +42,14 @@ public class P242ValidAnagram{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()){
+        if (s.length()!= t.length()){
             return false;
         }
-        Map<Character,Integer> map = new HashMap<>();
-        for (Character c : s.toCharArray()){
-            map.put(c,map.getOrDefault(c,0) + 1);
-        }
-        for (Character c : t.toCharArray()){
-            map.put(c,map.getOrDefault(c,0) - 1);
-            if (map.get(c) < 0){
-                return false;
-            }
-        }
-        return true;
+        char[] sChars = s.toCharArray();
+        Arrays.sort(sChars);
+        char[] tChars = t.toCharArray();
+        Arrays.sort(tChars);
+        return Arrays.equals(sChars,tChars);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -75,10 +68,10 @@ class Solution {
 hash: 统计每个字符出现的次数 O(n)
 
 3. 背诵和默写解法
-第二遍
+第二遍 √
 1. 马上自己写 -> LeeCode提交
 2. 多种解法比较，体会 -> 优化
-第三遍
+第三遍 √
 1. 过了一天后重复练习相同题目
 第四遍
 1. 过了一周重复练习
@@ -91,5 +84,23 @@ hash: 统计每个字符出现的次数 O(n)
 3. 写代码
 4. 阐述测试用例
 
+
+我的解法：
+public boolean isAnagram(String s, String t) {
+    if (s.length() != t.length()){
+        return false;
+    }
+    Map<Character,Integer> map = new HashMap<>();
+    for (Character c : s.toCharArray()){
+        map.put(c,map.getOrDefault(c,0) + 1);
+    }
+    for (Character c : t.toCharArray()){
+        map.put(c,map.getOrDefault(c,0) - 1);
+        if (map.get(c) < 0){
+            return false;
+        }
+    }
+    return true;
+}
 */
 }
