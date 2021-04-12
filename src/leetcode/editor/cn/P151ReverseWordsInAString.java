@@ -67,6 +67,10 @@
 
 
 package leetcode.editor.cn;
+
+import java.util.Arrays;
+import java.util.Collections;
+
 //Java：翻转字符串里的单词
 public class P151ReverseWordsInAString{
     public static void main(String[] args) {
@@ -80,15 +84,9 @@ public class P151ReverseWordsInAString{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public String reverseWords(String s) {
-        String[] ss = s.split(" ");
-        StringBuffer result = new StringBuffer();
-        for (int i = ss.length - 1; i >= 0 ; i--) {
-            if (ss[i].equals("")){
-                continue;
-            }
-            result.append(ss[i]).append(" ");
-        }
-        return result.substring(0,result.length() - 1);
+        String[] ss = s.trim().split(" +");
+        Collections.reverse(Arrays.asList(ss));
+        return String.join(" ",ss);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -106,6 +104,19 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的：
+public String reverseWords(String s) {
+    String[] ss = s.split(" ");
+    StringBuffer result = new StringBuffer();
+    for (int i = ss.length - 1; i >= 0 ; i--) {
+        if (ss[i].equals("")){
+            continue;
+        }
+        result.append(ss[i]).append(" ");
+    }
+    return result.substring(0,result.length() - 1);
+}
 */
 }
