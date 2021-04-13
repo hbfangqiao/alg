@@ -44,8 +44,9 @@
 
 
 package leetcode.editor.cn;
+
 //Java：最长回文子串
-public class P5LongestPalindromicSubstring{
+public class P5LongestPalindromicSubstring {
     public static void main(String[] args) {
         Solution solution = new P5LongestPalindromicSubstring().new Solution();
         // TO TEST
@@ -56,41 +57,51 @@ public class P5LongestPalindromicSubstring{
         System.out.println(solution.longestPalindrome("ac"));//a
 
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public String longestPalindrome(String s) {
-        return findPalindrome(s.length(),s);
-
-    }
-
-    private String findPalindrome(int length,String s){
-        if (length == 1) return s.substring(0,1);
-        for (int i = 0; i <= s.length() - length; i++) {
-            if (isPalindrome(i,i+length - 1,s)){
-                return s.substring(i,i+length);
+    class Solution {
+        public String longestPalindrome(String s) {
+            if (s.length() == 1) {
+                return s;
             }
-        }
-        return findPalindrome(length - 1,s);
-    }
-
-    private boolean isPalindrome(int low,int high,String s){
-        for (int i = low,j = high; i < j; i++,j--) {
-            if (s.charAt(i) != s.charAt(j)){
-                return false;
+            boolean[][] dp = new boolean[s.length()][s.length()];//dp[i][j] 表示 i...j 是否为回文串
+            for (int i = 0; i < s.length(); i++) {
+                dp[i][i] = true;
             }
+            char[] chars = s.toCharArray();
+            int maxLen = 1;
+            int begin = 0;
+            for (int len = 2; len <= s.length(); len++) {
+                for (int i = 0; i <= s.length() - len; i++) {
+                    int j = i + len - 1;
+                    if (chars[i] != chars[j]) {
+                        dp[i][j] = false;
+                        continue;
+                    }
+                    if (len < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                    if (dp[i][j] && len > maxLen) {
+                        maxLen = len;
+                        begin = i;
+                    }
+                }
+            }
+            return s.substring(begin, begin + maxLen);
         }
-        return true;
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
 第一遍：
 1. 5-15分钟读题思考题目 √
 String s = "xxxxxxx"  先用 s.length 去 s中寻找回文串，再用 s.length - 1 去寻找回文串，找到即为最大值
-时间复杂度O(N!)
+时间复杂度O(n2)
 
-2. 没有思路则直接看解法，比较解法优劣
+2. 没有思路则直接看解法，比较解法优劣 √
+
 3. 背诵和默写解法
 第二遍
 1. 马上自己写 -> LeeCode提交
@@ -100,6 +111,31 @@ String s = "xxxxxxx"  先用 s.length 去 s中寻找回文串，再用 s.length 
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的解法：O(n2)
+public String longestPalindrome(String s) {
+    return findPalindrome(s.length(),s);
+
+}
+
+private String findPalindrome(int length,String s){
+    if (length == 1) return s.substring(0,1);
+    for (int i = 0; i <= s.length() - length; i++) {
+        if (isPalindrome(i,i+length - 1,s)){
+            return s.substring(i,i+length);
+        }
+    }
+    return findPalindrome(length - 1,s);
+}
+
+private boolean isPalindrome(int low,int high,String s){
+    for (int i = low,j = high; i < j; i++,j--) {
+        if (s.charAt(i) != s.charAt(j)){
+            return false;
+        }
+    }
+    return true;
+}
 */
 }
