@@ -36,17 +36,16 @@ public class P125ValidPalindrome {
             if (s == null || s.length() == 0){
                 return true;
             }
-            char[] chars = s.toCharArray();
-            for (int i = 0,j=chars.length - 1; i <= j ;) {
-                char left = chars[i];
-                char right = chars[j];
-                if (!isValid(left)){
-                    i++;continue;
+            for (int i = 0, j = s.length() -1; i < j ;) {
+                if (!Character.isLetterOrDigit(s.charAt(i))){
+                    i++;
+                    continue;
                 }
-                if (!isValid(right)){
-                    j--;continue;
+                if (!Character.isLetterOrDigit(s.charAt(j))){
+                    j--;
+                    continue;
                 }
-                if (!String.valueOf(left).equalsIgnoreCase(String.valueOf(right))){
+                if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))){
                     return false;
                 }
                 i++;j--;
@@ -54,9 +53,6 @@ public class P125ValidPalindrome {
             return true;
         }
 
-        private boolean isValid(char c){
-            return (c >= 'a' && c <= 'z') || (c >= 'A' && c<='Z') || (c >='0'&& c<='9');
-        }
 
     }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -93,5 +89,32 @@ private String reverseString(String s) {
 private String filterNotLetterAndNumber(String s) {
     return s.replaceAll("[^0-9a-zA-Z]","");
 
+}
+
+第一遍解法：
+public boolean isPalindrome(String s) {
+    if (s == null || s.length() == 0){
+        return true;
+    }
+    char[] chars = s.toCharArray();
+    for (int i = 0,j=chars.length - 1; i <= j ;) {
+        char left = chars[i];
+        char right = chars[j];
+        if (!isValid(left)){
+            i++;continue;
+        }
+        if (!isValid(right)){
+            j--;continue;
+        }
+        if (!String.valueOf(left).equalsIgnoreCase(String.valueOf(right))){
+            return false;
+        }
+        i++;j--;
+    }
+    return true;
+}
+
+private boolean isValid(char c){
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c<='Z') || (c >='0'&& c<='9');
 }
 */
