@@ -64,32 +64,25 @@ public class P5LongestPalindromicSubstring {
             if (s.length() == 1) {
                 return s;
             }
-            boolean[][] dp = new boolean[s.length()][s.length()];//dp[i][j] 表示 i...j 是否为回文串
-            for (int i = 0; i < s.length(); i++) {
-                dp[i][i] = true;
-            }
-            char[] chars = s.toCharArray();
-            int maxLen = 1;
-            int begin = 0;
-            for (int len = 2; len <= s.length(); len++) {
-                for (int i = 0; i <= s.length() - len; i++) {
-                    int j = i + len - 1;
-                    if (chars[i] != chars[j]) {
-                        dp[i][j] = false;
-                        continue;
-                    }
-                    if (len < 3) {
-                        dp[i][j] = true;
-                    } else {
-                        dp[i][j] = dp[i + 1][j - 1];
-                    }
-                    if (dp[i][j] && len > maxLen) {
-                        maxLen = len;
-                        begin = i;
-                    }
+            int start = 0,end = 0;
+            for (int i = 0; i <s.length() ; i++) {
+                int[] result1 = expandAroundCenter(s,i,i);
+                int[] result2 = expandAroundCenter(s,i,i+1);
+                int len = Math.max(result1[0],result2[0]);//最长的长度
+                if (len > (end - start + 1)){
+                    start = result1[0]>result2[0] ? result1[1] : result2[1];
+                    end = result1[0]>result2[0] ? result1[2] : result2[2];
                 }
             }
-            return s.substring(begin, begin + maxLen);
+            return s.substring(start,end+1);
+        }
+
+        private int[] expandAroundCenter(String s,int left,int right){
+            while (left>=0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+                --left;
+                ++right;
+            }
+            return new int[]{(right - 1) - (left + 1) + 1,left + 1,right - 1};
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -116,7 +109,6 @@ String s = "xxxxxxx"  先用 s.length 去 s中寻找回文串，再用 s.length 
 我的解法：O(n2)
 public String longestPalindrome(String s) {
     return findPalindrome(s.length(),s);
-
 }
 
 private String findPalindrome(int length,String s){
@@ -137,5 +129,40 @@ private boolean isPalindrome(int low,int high,String s){
     }
     return true;
 }
+
+DP解法：O(n2)
+public String longestPalindrome(String s) {
+    if (s.length() == 1) {
+        return s;
+    }
+    boolean[][] dp = new boolean[s.length()][s.length()];//dp[i][j] 表示 i...j 是否为回文串
+    for (int i = 0; i < s.length(); i++) {
+        dp[i][i] = true;
+    }
+    char[] chars = s.toCharArray();
+    int maxLen = 1;
+    int begin = 0;
+    for (int len = 2; len <= s.length(); len++) {
+        for (int i = 0; i <= s.length() - len; i++) {
+            int j = i + len - 1;
+            if (chars[i] != chars[j]) {
+                dp[i][j] = false;
+                continue;
+            }
+            if (len < 3) {
+                dp[i][j] = true;
+            } else {
+                dp[i][j] = dp[i + 1][j - 1];
+            }
+            if (dp[i][j] && len > maxLen) {
+                maxLen = len;
+                begin = i;
+            }
+        }
+    }
+    return s.substring(begin, begin + maxLen);
+}
+
+
 */
 }
