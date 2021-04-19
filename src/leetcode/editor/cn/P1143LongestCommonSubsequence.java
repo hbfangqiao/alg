@@ -44,46 +44,45 @@
 
 package leetcode.editor.cn;
 
-import java.util.Arrays;
-
 //Java：最长公共子序列
-public class P1143LongestCommonSubsequence{
+public class P1143LongestCommonSubsequence {
     public static void main(String[] args) {
         Solution solution = new P1143LongestCommonSubsequence().new Solution();
         // TO TEST
-        System.out.println(solution.longestCommonSubsequence("aacde","ace"));
+        System.out.println(solution.longestCommonSubsequence("aacde", "ace"));//3
+
+        System.out.println(solution.longestCommonSubsequence("abc","abc"));//3
+        System.out.println(solution.longestCommonSubsequence("abc","def"));//0
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int longestCommonSubsequence(String text1, String text2) {
-        int m = text1.length();
-        int n = text2.length();
-        int[][] dp = new int[m+1][n+1];
-        for (int i = 0; i <m ; i++) {
-            for (int j = 0; j <n ; j++) {
-                char c1 = text1.charAt(i);
-                char c2 = text2.charAt(j);
-                if (c1 == c2){
-                    dp[i+1][j+1] = dp[i][j] + 1;
-                }else {
-                    dp[i+1][j+1] = Math.max(dp[i+1][j],dp[i][j+1]);
+    class Solution {
+        public int longestCommonSubsequence(String text1, String text2) {
+            int m = text1.length() + 1;
+            int n = text2.length() + 1;
+            int[][] dp = new int[m][n];
+            for (int i = 0; i < m-1; i++) {
+                for (int j = 0; j < n-1 ; j++) {
+                    char c1 = text1.charAt(i);
+                    char c2 = text2.charAt(j);
+                    if (c1 == c2){
+                        dp[i+1][j+1] = dp[i][j] + 1;
+                    }else {
+                        dp[i+1][j+1] = Math.max(dp[i+1][j],dp[i][j+1]);
+                    }
                 }
             }
+            return dp[m-1][n-1];
         }
-        for (int i = 0; i <dp.length ; i++) {
-            System.out.println(Arrays.toString(dp[i]));
-        }
-        return dp[m][n];
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 /*
-第一遍：
-1. 5-15分钟读题思考题目
+第一遍：√
+1. 5-15分钟读题思考题目 √
 2. 没有思路则直接看解法，比较解法优劣
 3. 背诵和默写解法
-第二遍
+第二遍 √
 1. 马上自己写 -> LeeCode提交
 2. 多种解法比较，体会 -> 优化
 第三遍
@@ -91,6 +90,28 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+题解第一遍
+public int longestCommonSubsequence(String text1, String text2) {
+    int m = text1.length();
+    int n = text2.length();
+    int[][] dp = new int[m+1][n+1];
+    for (int i = 0; i <m ; i++) {
+        for (int j = 0; j <n ; j++) {
+            char c1 = text1.charAt(i);
+            char c2 = text2.charAt(j);
+            if (c1 == c2){
+                dp[i+1][j+1] = dp[i][j] + 1;
+            }else {
+                dp[i+1][j+1] = Math.max(dp[i+1][j],dp[i][j+1]);
+            }
+        }
+    }
+    for (int i = 0; i <dp.length ; i++) {
+        System.out.println(Arrays.toString(dp[i]));
+    }
+    return dp[m][n];
+}
 */
 }
