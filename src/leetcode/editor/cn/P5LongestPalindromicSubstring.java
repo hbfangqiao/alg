@@ -61,29 +61,29 @@ public class P5LongestPalindromicSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
-            if (s.length() == 1) {
-                return s;
-            }
-            int start = 0,end = 0;
-            for (int i = 0; i <s.length() ; i++) {
-                int[] result1 = expandAroundCenter(s,i,i);
-                int[] result2 = expandAroundCenter(s,i,i+1);
-                int len = Math.max(result1[0],result2[0]);//最长的长度
-                if (len > (end - start + 1)){
-                    start = result1[0]>result2[0] ? result1[1] : result2[1];
-                    end = result1[0]>result2[0] ? result1[2] : result2[2];
+            int start = 0;
+            int maxLen = 0;
+            for (int i = 0; i < s.length(); i++) {
+                int len1 = longestArroundCenter(i, i, s);
+                int len2 = longestArroundCenter(i,i+1,s);
+                int len = Math.max(len1,len2);
+                if (len > maxLen){
+                    maxLen = len;
+                    // start = i - (len-1/2)  i
+                    start = len % 2 == 1 ? i - len/2 : i - len/2 + 1;
                 }
             }
-            return s.substring(start,end+1);
+            return s.substring(start,start+maxLen);
         }
 
-        private int[] expandAroundCenter(String s,int left,int right){
-            while (left>=0 && right < s.length() && s.charAt(left) == s.charAt(right)){
-                --left;
-                ++right;
+        private int longestArroundCenter(int left,int right,String s){
+            while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+                left--;
+                right++;
             }
-            return new int[]{(right - 1) - (left + 1) + 1,left + 1,right - 1};
+            return right  - left - 1;
         }
+
     }
 //leetcode submit region end(Prohibit modification and deletion)
 
@@ -96,7 +96,7 @@ String s = "xxxxxxx"  先用 s.length 去 s中寻找回文串，再用 s.length 
 2. 没有思路则直接看解法，比较解法优劣 √
 
 3. 背诵和默写解法
-第二遍
+第二遍 √
 1. 马上自己写 -> LeeCode提交
 2. 多种解法比较，体会 -> 优化
 第三遍
@@ -163,6 +163,29 @@ public String longestPalindrome(String s) {
     return s.substring(begin, begin + maxLen);
 }
 
+中心扩散法
+if (s.length() == 1) {
+    return s;
+}
+int start = 0,end = 0;
+for (int i = 0; i <s.length() ; i++) {
+    int[] result1 = expandAroundCenter(s,i,i);
+    int[] result2 = expandAroundCenter(s,i,i+1);
+    int len = Math.max(result1[0],result2[0]);//最长的长度
+    if (len > (end - start + 1)){
+        start = result1[0]>result2[0] ? result1[1] : result2[1];
+        end = result1[0]>result2[0] ? result1[2] : result2[2];
+    }
+}
+return s.substring(start,end+1);
+}
+
+private int[] expandAroundCenter(String s,int left,int right){
+while (left>=0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+    --left;
+    ++right;
+}
+return new int[]{(right - 1) - (left + 1) + 1,left + 1,right - 1};
 
 */
 }
