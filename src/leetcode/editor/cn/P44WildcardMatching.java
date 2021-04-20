@@ -93,12 +93,7 @@ class Solution {
                     dp[i+1][j+1] = dp[i][j];
                 }
                 if (p.charAt(j) == '*'){
-                    for (int k = 0; k <=i+1 ; k++) {
-                        if (dp[k][j]){
-                            dp[i+1][j+1] = true;
-                            break;
-                        }
-                    }
+                    dp[i+1][j+1] = dp[i][j+1] || dp[i+1][j];
                 }
             }
         }
@@ -106,7 +101,7 @@ class Solution {
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
-
+  //
 /*
 第一遍：
 1. 5-15分钟读题思考题目 √
@@ -120,6 +115,59 @@ class Solution {
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+我的题解 O(n*n*m )
+public boolean isMatch(String s, String p) {
+    int m = s.length()+1;
+    int n = p.length()+1;
+    boolean[][] dp = new boolean[m][n];
+    dp[0][0] = true;
+    for (int i = 0; i <n-1 ; i++) {
+        if (p.charAt(i) == '*'){
+            dp[0][i+1] = dp[0][i];
+        }
+    }
+    for (int i = 0; i <m-1 ; i++) {
+        for (int j = 0; j <n-1 ; j++) {
+            if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?'){
+                dp[i+1][j+1] = dp[i][j];
+            }
+            if (p.charAt(j) == '*'){
+                for (int k = 0; k <=i+1 ; k++) {
+                    if (dp[k][j]){
+                        dp[i+1][j+1] = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
+
+题解dp解法
+public boolean isMatch(String s, String p) {
+    int m = s.length()+1;
+    int n = p.length()+1;
+    boolean[][] dp = new boolean[m][n];
+    dp[0][0] = true;
+    for (int i = 0; i <n-1 ; i++) {
+        if (p.charAt(i) == '*'){
+            dp[0][i+1] = dp[0][i];
+        }
+    }
+    for (int i = 0; i <m-1 ; i++) {
+        for (int j = 0; j <n-1 ; j++) {
+            if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?'){
+                dp[i+1][j+1] = dp[i][j];
+            }
+            if (p.charAt(j) == '*'){
+                dp[i+1][j+1] = dp[i][j+1] || dp[i+1][j];
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
 */
 }
