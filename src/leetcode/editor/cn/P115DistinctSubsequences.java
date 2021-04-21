@@ -67,22 +67,22 @@ public class P115DistinctSubsequences{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int numDistinct(String s, String t) {
-        int col = t.length() + 1;
-        int row = s.length() + 1;
-        int[][] dp = new int[row][col];
-        for (int i = 0; i <row ; i++) {
+        int m = s.length()+1;
+        int n = t.length()+1;
+        int[][] dp = new int[m][n];
+        for (int i = 0; i <m ; i++) {
             dp[i][0] = 1;
         }
-        for (int i = 1; i <row ; i++) {
-            for (int j = 1; j <col ; j++) {
-                if (s.charAt(i-1) == t.charAt(j-1)){
-                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+        for (int i = 0; i <m-1 ; i++) {
+            for (int j = 0; j <n-1 ; j++) {
+                if (s.charAt(i) == t.charAt(j)){
+                    dp[i+1][j+1] = dp[i][j]+dp[i][j+1];
                 }else {
-                    dp[i][j] = dp[i-1][j];
+                    dp[i+1][j+1] = dp[i][j+1];
                 }
             }
         }
-        return dp[row-1][col-1];
+        return dp[m-1][n-1];
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
@@ -123,6 +123,52 @@ g	1	3	4	5	1
 第四遍
 1. 过了一周重复练习
 第五遍
-1. 面试前一周重复练习	
+1. 面试前一周重复练习
+
+第一遍:
+public int numDistinct(String s, String t) {
+    int col = t.length() + 1;
+    int row = s.length() + 1;
+    int[][] dp = new int[row][col];
+    for (int i = 0; i <row ; i++) {
+        dp[i][0] = 1;
+    }
+    for (int i = 1; i <row ; i++) {
+        for (int j = 1; j <col ; j++) {
+            if (s.charAt(i-1) == t.charAt(j-1)){
+                dp[i][j] = dp[i-1][j-1] + dp[i-1][j];
+            }else {
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+    return dp[row-1][col-1];
+}
+
+第二遍
+####b
+###b  dp[i+1][j+1] = dp[i][j] + dp[i][j+1]
+
+####b dp[i+1][j+1] = dp[i][j+1]
+###c
+
+public int numDistinct(String s, String t) {
+    int m = s.length()+1;
+    int n = t.length()+1;
+    int[][] dp = new int[m][n];
+    for (int i = 0; i <m ; i++) {
+        dp[i][0] = 1;
+    }
+    for (int i = 0; i <m-1 ; i++) {
+        for (int j = 0; j <n-1 ; j++) {
+            if (s.charAt(i) == t.charAt(j)){
+                dp[i+1][j+1] = dp[i][j]+dp[i][j+1];
+            }else {
+                dp[i+1][j+1] = dp[i][j+1];
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
 */
 }
